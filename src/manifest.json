@@ -1,0 +1,37 @@
+{
+  "manifest_version": 2
+, "name": "Wasted!"
+, "version": "0.0.1"
+
+, "description": "Tracking the time you have spent on web-sites and presenting it so you could easily see where the time was wasted. All the collected data are keeped local, no third-party services are involved."
+
+, "icons": {
+    "48": "icons/wasted-48.png"
+  }
+
+, "applications": {
+    "gecko": {
+      "id": "todo@todo.org"
+    , "strict_min_version": "45.0"
+    }
+  }
+
+, "permissions": [ "storage" ]
+
+, "options_ui": {
+    "page": "options.html"
+  , "open_in_tab": true
+  }
+
+, "background": {
+    "scripts": ["background.js"]
+  }
+
+, "content_scripts": [
+    {
+      "matches": ["<all_urls>"]
+    , "js": ["content.js"]
+    }
+  ]
+}
+

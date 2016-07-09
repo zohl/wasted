@@ -1,0 +1,43 @@
+body {
+
+}
+
+a {
+
+}
+
+.menu {
+  a {
+    padding-right: 4ch;
+  }
+}
+
+.contents {
+  & > div {
+    display: none;
+  }
+
+  & > .active {
+    display: block;
+  };
+}
+
+.reports {
+
+  & > a {
+    padding-left: 3ch;
+    padding-right: 3ch;
+  }
+
+  table {
+    border: 1px #000 solid;
+    border-collapse: collapse;
+    border-spacing: 0px;
+  }
+
+  table, th, td {
+    padding: 5px;
+    border: 1px solid black;
+  }
+}
+
