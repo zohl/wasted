@@ -6,15 +6,15 @@ let placeholder = () => {};
 import * as log from '../common/log';
 
 chrome.runtime.onMessage.addListener((() =>
-  (message:Message, sender:any, response:any) => {
+  (message: Message, sender: any, response: any) => {
 
-    if(message.type == 'focus') {
-      log.start(message.hostname);
-    }
+      if(message.type == 'focus') {
+          log.start(message.hostname);
+      }
 
-    if(message.type == 'blur') {
-      log.stop();
-    }
+      if(message.type == 'blur') {
+          log.stop();
+      }
   }
 )());
 

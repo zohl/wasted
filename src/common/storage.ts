@@ -6,18 +6,13 @@ import * as promise from './promise';
 let read = (prefix: string): Promise<any> =>
   new Promise((response, reject) => {
 
-      chrome.storage.local.get(prefix, (data: any) => {
+      chrome.storage.local.get(prefix, (result: any) => {
       if (chrome.runtime.lastError) {
           console.log(chrome.runtime.lastError);
           reject();
       }
       else {
-          let result = data;
-          if (result === undefined || !(prefix in result)) {
-              result = {};
-              result[prefix] = {};
-          }
-          response(result);
+          response((result !== undefined && prefix in result) ? result[prefix] : {});
       }
     });
   });
@@ -25,10 +20,10 @@ let read = (prefix: string): Promise<any> =>
 
 let modify = (prefix: string, f: (data: any) => any) =>
     promise.bind(read(prefix), (data: any) => new Promise((response:() => void, reject:() => void) => {
+        let result:any = {};
+        result[prefix] = f(data);
 
-        data[prefix] = f(data[prefix]);
-
-        chrome.storage.local.set(data, () => {
+        chrome.storage.local.set(result, () => {
             if(chrome.runtime.lastError) {
                 reject();
             }

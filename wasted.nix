@@ -39,6 +39,9 @@ in stdenv.mkDerivation {
     lessc "./options/style.less" "${buildDir}/options.css"
     rollup "./options/_init.js" > "${buildDir}/options.js"
 
+    rollup "./content/_init.js" > "${buildDir}/content.js"
+    rollup "./background/_init.js" > "${buildDir}/background.js"
+
     # pushd ${buildDir}
     # zip -r ../wasted.xpi *
     # popd
