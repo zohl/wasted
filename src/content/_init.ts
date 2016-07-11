@@ -1,9 +1,7 @@
 /// <reference path="../common/webextensions.d.ts"/>
 /// <reference path="../common/common.d.ts"/>
 
-let placeholder = () => {};
-
-var sendMessage = (messageType: MessageType) => () => {
+var sendMessage = (messageType: MessageType) => {
 
     console.log('sendMessage:', messageType);
 
@@ -19,11 +17,13 @@ var sendMessage = (messageType: MessageType) => () => {
 };
 
 window.addEventListener('focus', () => {
-    console.log('content::focus');
+    sendMessage('start');
 });
 
 window.addEventListener('blur', () => {
-    console.log('content::blur');
+    sendMessage('stop');
 });
 
-console.log('content::load');
+if(document.hasFocus()) {
+    sendMessage('start');
+}

@@ -27,20 +27,13 @@ let init = (root: HTMLDivElement) => {
 
     domGenerate.onclick = () => {
         log.query().then(data => {
-            let tableData = data.map((datum: LogEntry, i:number) => {
-                let timestamp:number = datum.timestamp;
-                let group = datum.group;
-
+            let tableData = data.map((entry: LogEntry, i:number) => {
                 return `
                   <tr>
                     <td>${i.toString()}</td>
-                    <td>${timestamp.toString()}</td>
-                    <td>${((
-                      (i + 1 < data.length)
-                        ? data[i+1].timestamp
-                        : Date.now())
-                      - timestamp).toString()}</td>
-                    <td>${group}</td>
+                    <td>${entry.timestamp.toString()}</td>
+                    <td>${entry.duration.toString()}</td>
+                    <td>${entry.group.name}</td>
                   </tr>
                 `;
             }).join('');

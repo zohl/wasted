@@ -1,11 +1,14 @@
+/// <reference path="group.d.ts"/>
+
 interface LogEntry {
   timestamp : number;
   duration  : number;
   group     : Group;
+  ongoing   : boolean;
 }
 
 
-type MessageType = 'focus' | 'blur'
+type MessageType = 'start' | 'stop'
 
 interface Message {
   type:     MessageType;
@@ -14,6 +17,4 @@ interface Message {
   port:     string;
   pathname: string;
 }
-
-type Group = string
 
