@@ -7,6 +7,7 @@
 import * as log from '../common/log';
 import * as reports from './reports/_init';
 import * as settings from './settings/_init';
+import {mkMenu} from './menu';
 
 let components:Array<Component> = [
     reports
@@ -15,47 +16,19 @@ let components:Array<Component> = [
 
 let init = (root: HTMLDivElement) => {
 
-    let appHTML = `
+    root.innerHTML = `
        <div class = "menu"></div>
        <hr/>
        <div class = "contents"></div>
     `;
-    root.innerHTML = appHTML;
 
-    let domMenu = root.querySelector('.menu');
-    let domContents = root.querySelector('.contents');
+    mkMenu(
+          <HTMLDivElement>root.querySelector('.menu')
+        , <HTMLDivElement>root.querySelector('.contents')
+        , (component: Component) => { component.update(); }
+        , components);
 
-    let mkAnchor = (name: string) => {
-        return ['<a href = "#', name, '">', name, '</a>'].join('');
-    };
-
-    let mkContainer = (name: string) => {
-        return ['<div class = "', name, '"></div>'].join('');
-    };
-
-    components.forEach(component => {
-        let name = component.name;
-
-        domMenu.insertAdjacentHTML('beforeend', mkAnchor(name));
-        let domAnchor = <HTMLAnchorElement>(domMenu.querySelector('a[href="#' + name + '"]'));
-
-        domContents.insertAdjacentHTML('beforeend', mkContainer(component.name));
-        let domContainer = <HTMLDivElement>root.querySelector('.contents > .' + name);
-
-        domAnchor.onclick = () => {
-            let domPage = <HTMLDivElement>root.querySelector('.contents > .active');
-            if (domPage != null) {
-                domPage.classList.remove('active');
-            }
-            component.update();
-            domContainer.classList.add('active');
-            return false;
-        };
-
-        component.init(domContainer);
-    });
-
-    let domAnchor = <HTMLAnchorElement>domMenu.querySelector('.menu a');
+    let domAnchor = <HTMLAnchorElement>root.querySelector('.menu a');
     if (domAnchor != null) {
         domAnchor.click();
     }
